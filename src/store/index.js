@@ -1,7 +1,10 @@
 import {createContext, useContext} from "react";
+import LoginStore from "@/store/login.Store";
 
 class RootStore {
-
+    constructor() {
+        this.loginStore = new LoginStore()
+    }
 }
 
 const rootStore = new RootStore()
