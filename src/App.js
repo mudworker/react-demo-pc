@@ -1,7 +1,11 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Login from "@/pages/Login";
 import Layout from "@/pages/Layout";
+import Publish from "@/pages/Publish";
+import Article from "@/pages/Article";
+import Home from "@/pages/Home";
 import AuthComponent from "@/components/AuthComponent";
+import './App.css'
 
 function App() {
     return (
@@ -15,7 +19,11 @@ function App() {
                             {/*Layout需要权限判断，下面的Login则不需要*/}
                             <Layout/>
                         </AuthComponent>
-                    }></Route>
+                    }>
+                        <Route index element={<Home/>}></Route>
+                        <Route path='/article' element={<Article/>}></Route>
+                        <Route path='/publish' element={<Publish/>}></Route>
+                    </Route>
                     <Route path='/login' element={<Login/>}></Route>
                 </Routes>
             </div>
