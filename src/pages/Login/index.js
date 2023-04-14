@@ -30,7 +30,7 @@ function Login() {
                 <img className='login-logo' src={logo} alt=''/>
                 {/*登陆表单*/}
                 <Form
-                    initialValues={{remember: true, code: '246810'}}
+                    initialValues={{remember: true, mobile:'13811111111',code: '246810'}}
                     onFinish={onFinish}
                 >
                     <Form.Item
