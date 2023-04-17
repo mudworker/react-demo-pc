@@ -52,6 +52,7 @@ const GeekLayout = () => {
                     {/*高亮原理：selectedKeys属性与Menu.Item组件的key属性发生匹配的时候，Item组件即可高亮*/}
                     {/*获取当前激活的path路径，交给selectedKeys*/}
                     {/*selectedKey确保前进后退的高亮正确*/}
+                    {/*todo：antd menu items新写法*/}
                     <Menu
                         mode="inline"
                         theme="dark"
