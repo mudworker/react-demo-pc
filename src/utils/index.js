@@ -9,5 +9,5 @@ export {
     http,
     setToken,
     getToken,
-    removeToken
+    removeToken,
 }

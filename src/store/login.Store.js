@@ -2,7 +2,7 @@
  * login module
  */
 import {makeAutoObservable} from "mobx";
-import {getToken, http, setToken} from "@/utils";
+import {getToken, http, removeToken, setToken} from "@/utils";
 
 class LoginStore {
     token = getToken() || ''
@@ -12,13 +12,18 @@ class LoginStore {
         makeAutoObservable(this)
     }
 
-    getToken = async ({mobile, code}) => {
+    async getToken({mobile, code}) {
         // 调用登陆接口
         const res = await http.post('/authorizations', {mobile, code})
         // 存入token
         this.token = res.data.token
         // 存入localstorage
         setToken(this.token)
+    }
+
+    clearToken = () => {
+        this.token = ''
+        removeToken()
     }
 
 }

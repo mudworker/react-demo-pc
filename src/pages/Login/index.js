@@ -10,7 +10,7 @@ function Login() {
 
     async function onFinish(values) {
         // 参数values即是表单输入数据
-        console.log(values)
+        // console.log(values)
         // 登陆
         const {mobile, code} = values
         try {
