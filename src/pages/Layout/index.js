@@ -41,7 +41,7 @@ const GeekLayout = () => {
                 <div className="user-info">
                     <span className="user-name">{userStore.userInfo.name}</span>
                     <span className="user-logout">
-                        <Popconfirm title="是否确认退出？" okText="退出" cancelText="取消" onConfirm={onConfirm}>
+                        <Popconfirm title="是否确认退出？" okText=  "退出" cancelText="取消" onConfirm={onConfirm}>
                           <LogoutOutlined/> 退出
                         </Popconfirm>
                     </span>
