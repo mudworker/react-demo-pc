@@ -10,11 +10,11 @@ import {observer} from 'mobx-react-lite'
 
 const {Header, Sider} = Layout
 
-// const MenuList = [
-//     {label: '数据概览', to: '/', key: '/', icon: <HomeOutlined/>, children: null},
-//     {label: '内容管理', to: '/article', key: '/article', icon: <DiffOutlined/>, children: null},
-//     {label: '发布文章', to: '/publish', key: '/publish', icon: <EditOutlined/>, children: null}
-// ]
+const MenuList = [
+    {label: <Link to="/">数据概览</Link>, to: '/', key: '/', icon: <HomeOutlined/>, children: null},
+    {label: <Link to="/article">内容管理</Link>, to: '/article', key: '/article', icon: <DiffOutlined/>, children: null},
+    {label: <Link to="/publish">发布文章</Link>, to: '/publish', key: '/publish', icon: <EditOutlined/>, children: null}
+]
 
 const GeekLayout = () => {
     // 获取当前path
@@ -52,25 +52,14 @@ const GeekLayout = () => {
                     {/*高亮原理：selectedKeys属性与Menu.Item组件的key属性发生匹配的时候，Item组件即可高亮*/}
                     {/*获取当前激活的path路径，交给selectedKeys*/}
                     {/*selectedKey确保前进后退的高亮正确*/}
-                    {/*todo：antd menu items新写法*/}
                     <Menu
                         mode="inline"
                         theme="dark"
                         defaultSelectedKeys={[pathname]}
                         selectedKeys={[pathname]}
                         style={{height: '100%', borderRight: 0}}
-                        // items={MenuList}
-                        // onClick={onClick}
+                        items={MenuList}
                     >
-                        <Menu.Item icon={<HomeOutlined/>} key="/">
-                            <Link to="/">数据概览</Link>
-                        </Menu.Item>
-                        <Menu.Item icon={<DiffOutlined/>} key="/article">
-                            <Link to="/article">内容管理</Link>
-                        </Menu.Item>
-                        <Menu.Item icon={<EditOutlined/>} key="/publish">
-                            <Link to="/publish">发布文章</Link>
-                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="layout-content" style={{padding: 20}}>
