@@ -21,10 +21,12 @@ const GeekLayout = () => {
     const {pathname} = useLocation()
 
     // 获取用户信息显示在右上角
-    const {userStore, loginStore} = useStore()
+    const {userStore, loginStore,channelStore} = useStore()
     useEffect(() => {
         userStore.getUserInfo()
-    }, [userStore])
+        // 初始化频道列表下拉框
+        channelStore.loadChannelList()
+    }, [userStore, channelStore])
 
     // 确认退出
     const navigate = useNavigate()
@@ -33,6 +35,7 @@ const GeekLayout = () => {
         loginStore.clearToken()
         navigate('/login')
     }
+
 
     return (
         <Layout>

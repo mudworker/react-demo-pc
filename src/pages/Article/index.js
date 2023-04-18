@@ -1,5 +1,5 @@
-import {Link} from 'react-router-dom'
-import {Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag} from 'antd'
+import {Link, useNavigate} from 'react-router-dom'
+import {Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag, Popconfirm} from 'antd'
 import 'moment/locale/zh-cn'
 import locale from 'antd/es/date-picker/locale/zh_CN'
 import './index.scss'
@@ -7,41 +7,9 @@ import {EditOutlined, DeleteOutlined} from "@ant-design/icons";
 import img404 from '@/assets/error.png'
 import {useEffect, useState} from "react";
 import {http} from '@/utils'
-
-const {Option} = Select
+import Channel from "@/components/Channel";
 const {RangePicker} = DatePicker
 
-/**
- * 频道下拉框组件
- */
-const Channel = () => {
-    // 频道列表管理
-    const [channels, setChannels] = useState([])
-
-    useEffect(() => {
-        // 注意：异步请求的写法
-        const fetchChannels = async () => {
-            const res = await http.get('/channels')
-            setChannels(res.data.channels)
-        }
-        fetchChannels()
-    }, [])
-
-    return (
-        <Form.Item label="频道" name="channel_id">
-            <Select
-                placeholder="请选择文章频道"
-                style={{width: 200}}
-            >
-                {
-                    channels.map(item => (
-                        <Option value={item.id} key={item.id}>{item.name}</Option>
-                    ))
-                }
-            </Select>
-        </Form.Item>
-    )
-}
 
 /**
  * 结果表格组件
@@ -65,6 +33,22 @@ const ResTable = (props) => {
         }
         searchList()
     }, [props.params])
+
+    // 删除回调
+    const delArticle = async (data) => {
+        await http.delete(`/mp/articles/${data.id}`)
+        // 更新列表
+        props.setParams({
+            ...props.params,
+            page: 1
+        })
+    }
+
+    // 编辑回调
+    const navigate = useNavigate()
+    const editArticle = (data) => {
+        navigate(`/publish?id=${data.id}`)
+    }
 
     const columns = [
         {
@@ -106,13 +90,21 @@ const ResTable = (props) => {
             render: data => {
                 return (
                     <Space size="middle">
-                        <Button type="primary" shape="circle" icon={<EditOutlined/>}/>
-                        <Button
-                            type="primary"
-                            danger
-                            shape="circle"
-                            icon={<DeleteOutlined/>}
-                        />
+                        <Button type="primary" shape="circle" icon={<EditOutlined/>}
+                                onClick={() => editArticle(data)}/>
+                        <Popconfirm
+                            title="确认删除该条文章吗?"
+                            onConfirm={() => delArticle(data)}
+                            okText="确认"
+                            cancelText="取消"
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                shape="circle"
+                                icon={<DeleteOutlined/>}
+                            />
+                        </Popconfirm>
                     </Space>
                 )
             }
@@ -199,7 +191,9 @@ const Article = () => {
                         </Radio.Group>
                     </Form.Item>
 
-                    <Channel/>
+                    <Form.Item label="频道" name="channel_id">
+                        <Channel/>
+                    </Form.Item>
 
                     <Form.Item label="日期" name="date">
                         {/* 传入locale属性 控制中文显示*/}
@@ -214,7 +208,7 @@ const Article = () => {
                 </Form>
             </Card>
             {/*文章列表区域*/}
-            <ResTable params={params} pageChange={pageChange}/>
+            <ResTable params={params} pageChange={pageChange} setParams={setParams}/>
         </div>
     )
 }
