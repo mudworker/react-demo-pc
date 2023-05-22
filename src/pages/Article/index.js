@@ -1,5 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom'
-import {Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Table, Space, Tag, Popconfirm} from 'antd'
+import {Card, Breadcrumb, Form, Button, Radio, DatePicker, Table, Space, Tag, Popconfirm} from 'antd'
 import 'moment/locale/zh-cn'
 import locale from 'antd/es/date-picker/locale/zh_CN'
 import './index.scss'
@@ -8,6 +8,7 @@ import img404 from '@/assets/error.png'
 import {useEffect, useState} from "react";
 import {http} from '@/utils'
 import Channel from "@/components/Channel";
+
 const {RangePicker} = DatePicker
 
 
@@ -141,7 +142,7 @@ const Article = () => {
         const _params = {}
         // 格式化status
         _params.status = status
-        if (channel_id) {
+        if (channel_id !== undefined) {
             _params.channel_id = channel_id
         }
         if (date) {
